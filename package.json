@@ -8,5 +8,14 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "rostber",
-  "license": "ISC"
+  "license": "ISC",
+  "repository": {
+    "type": "git", 
+    "url": "https://github.com/rostber/visitor_info.git"
+  },
+  "dependencies": {
+    "http" : "~0.0.0",
+    "https" : "~1.0.0",
+    "fb" : "~1.1.1"
+  }
 }
