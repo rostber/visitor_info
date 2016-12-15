@@ -10,12 +10,14 @@
   "author": "rostber",
   "license": "ISC",
   "repository": {
-    "type": "git", 
+    "type": "git",
     "url": "https://github.com/rostber/visitor_info.git"
   },
   "dependencies": {
-    "http" : "~0.0.0",
-    "https" : "~1.0.0",
-    "fb" : "~1.1.1"
+    "fb": ">=1.1.1",
+    "http": ">=0.0.0",
+    "https": ">=1.0.0",
+    "node-yaml": "^3.0.3",
+    "vksdk": ">=5.3.2"
   }
 }

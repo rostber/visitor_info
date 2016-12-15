@@ -1,22 +1,26 @@
 var FB = require('fb');
+var config = global.config.fb;
+
 // https://graph.facebook.com/search?q=svb-tver@mail.ru&type=user
-var appId = '344076839280078';
-var appSecret = '0b9054a746aeefb9dcf123ce0446ce31';
-var accessToken = '344076839280078|THpaF5yZrmgewIyIMRI5JkfE3W0';
 
 module.exports.fb = {
   getVisitorsInfo: function(emails, callback) {
+    
+
+    // TODO develop process
+
+    //console.log( this.getToken() );
+
     this.setToken();
 
-FB.api('/search', { q: 'svb-tver@mail.ru', type: 'user' }, function (res) {
-  if(!res || res.error) {
-    console.log(!res ? 'error occurred' : res.error);
-    return;
-  }
-  console.log(res.id);
-  console.log(res.name);
-});
-
+    FB.api('/search', { q: 'svb-tver@mail.ru', type: 'user', fields:'id,name,first_name,last_name,gender,picture,relationship_status,location' }, function (res) {
+      if(!res || res.error) {
+        console.log(!res ? 'error occurred' : res.error);
+        return;
+      }
+      console.log(res.id);
+      console.log(res.name);
+    });
 
 /*    this.getToken()
       .then(function(accessToken) {
@@ -26,7 +30,7 @@ FB.api('/search', { q: 'svb-tver@mail.ru', type: 'user' }, function (res) {
         console.log('error', res);
       });*/
 
-return ;
+    return false;
 
 
     var self = this;
@@ -35,7 +39,7 @@ return ;
     var check = function() {
       if (i >= emails.length - 1) callback(visitorsInfo);
       else i++;
-    }
+    };
     emails.map(function(email) {
       self.request(email)
         .then(function(visitorInfo) {
@@ -55,19 +59,21 @@ return ;
     });
   },
   setToken: function() {
-    FB.setAccessToken(accessToken);
+    FB.setAccessToken(config.accessToken);
   },
   getToken: function() {
+    FB.options({scope: "public_profile, email, read_insights, user_birthday, user_religion_politics, user_relationships, user_relationship_details, user_hometown, user_location, user_website, user_photos, user_about_me, user_status"});
     return new Promise(function(resolve, reject) {
       FB.api('oauth/access_token', {
-        client_id: appId,
-        client_secret: appSecret,
+        client_id: config.appId,
+        client_secret: config.appSecret,
         grant_type: 'client_credentials'
       }, function (res) {
         if (!res || res.error) {
           return reject(res.error);
         }
         var accessToken = res.access_token;
+        console.log('accessToken: ', accessToken);
         return resolve(accessToken);
       });
     });
